@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="bs">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <title>EcoTrack - Ekološki monitoring</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <header class="app-header">
         <section class="brand">
@@ -48,10 +49,44 @@
         </aside>
 
         <section class="workspace">
+
             <section id="pregled" class="overview">
                 <h2>Pregled ekološkog efekta</h2>
-                <p>Dobro došli na EcoTrack platformu.</p>
+                <p>Sumarni podaci o ekološkom učinku kompanije.</p>
+
+                <section class="dashboard-cards" aria-label="Sumarni podaci">
+                    <article class="dashboard-card">
+                        <h3>Ukupna emisija CO2</h3>
+                        <p class="card-value">1.245,80 kg</p>
+                        <p class="card-description">
+                            Ukupna procijenjena emisija ugljen-dioksida.
+                        </p>
+                    </article>
+
+                    <article class="dashboard-card">
+                        <h3>Ušteda energije</h3>
+                        <p class="card-value">18,5%</p>
+                        <p class="card-description">
+                            Ostvarena ušteda u odnosu na prethodni period.
+                        </p>
+                    </article>
+
+                    <article class="dashboard-card">
+                        <h3>
+                            Status postrojenja:
+                            <span class="facility-name">
+                                Donaudampfschifffahrtsgesellschaftskapitaensbuero
+                            </span>
+                        </h3>
+
+                        <p class="card-value">Aktivno</p>
+                        <p class="card-description">
+                            Postrojenje radi u skladu s trenutnim parametrima.
+                        </p>
+                    </article>
+                </section>
             </section>
+
 
             <section id="mjerenja" class="measurement-section">
                 <h2>Unos novog mjerenja</h2>
@@ -62,12 +97,7 @@
                             Izbor energenta <span aria-hidden="true">*</span>
                         </label>
 
-                        <select
-                            id="energy-type"
-                            name="energy-type"
-                            required
-                            aria-required="true"
-                        >
+                        <select id="energy-type" name="energy-type" required aria-required="true">
                             <option value="" selected disabled>Odaberite energent</option>
                             <option value="struja">Struja</option>
                             <option value="plin">Plin</option>
@@ -80,16 +110,8 @@
                             Količina potrošnje <span aria-hidden="true">*</span>
                         </label>
 
-                        <input
-                            type="number"
-                            id="consumption"
-                            name="consumption"
-                            min="0.01"
-                            step="0.01"
-                            placeholder="Npr. 125.50"
-                            required
-                            aria-required="true"
-                        >
+                        <input type="number" id="consumption" name="consumption" min="0.01" step="0.01"
+                            placeholder="Npr. 125.50" required aria-required="true">
 
                         <p class="field-description">
                             Unesite pozitivnu vrijednost s najviše dvije decimale.
@@ -101,23 +123,12 @@
                             Datum očitanja <span aria-hidden="true">*</span>
                         </label>
 
-                        <input
-                            type="date"
-                            id="reading-date"
-                            name="reading-date"
-                            min="2026-01-01"
-                            max="2026-12-31"
-                            required
-                            aria-required="true"
-                        >
+                        <input type="date" id="reading-date" name="reading-date" min="2026-01-01" max="2026-12-31"
+                            required aria-required="true">
                     </section>
 
                     <section class="form-group checkbox-group">
-                        <input
-                            type="checkbox"
-                            id="incident"
-                            name="incident"
-                        >
+                        <input type="checkbox" id="incident" name="incident">
 
                         <label for="incident">
                             Hitna intervencija / Incident
@@ -128,10 +139,105 @@
                 </form>
             </section>
 
+
             <section id="historija" class="history-section">
                 <h2>Historija potrošnje</h2>
-                <p>Historija mjerenja bit će prikazana u ovoj sekciji.</p>
+                <p>Pregled prethodno evidentiranih mjerenja.</p>
+
+                <section class="table-container" aria-label="Tabela historije mjerenja">
+                    <table>
+                        <caption>
+                            Historija mjerenja potrošnje energenata
+                        </caption>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Energent</th>
+                                <th scope="col">Potrošnja</th>
+                                <th scope="col">Jedinica</th>
+                                <th scope="col">CO2 emisija</th>
+                                <th scope="col">Incident</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>04.11.2026.</td>
+                                <td>Struja</td>
+                                <td>125.50</td>
+                                <td>kWh</td>
+                                <td>52.71 kg</td>
+                                <td>Ne</td>
+                            </tr>
+
+                            <tr>
+                                <td>03.11.2026.</td>
+                                <td>Plin</td>
+                                <td>85.25</td>
+                                <td>m³</td>
+                                <td>171.36 kg</td>
+                                <td>Da</td>
+                            </tr>
+
+                            <tr>
+                                <td>02.11.2026.</td>
+                                <td>Voda</td>
+                                <td>42.75</td>
+                                <td>m³</td>
+                                <td>0 kg</td>
+                                <td>Ne</td>
+                            </tr>
+
+                            <tr>
+                                <td>01.11.2026.</td>
+                                <td>Struja</td>
+                                <td>210.00</td>
+                                <td>kWh</td>
+                                <td>88.20 kg</td>
+                                <td>Ne</td>
+                            </tr>
+
+                            <tr>
+                                <td>31.10.2026.</td>
+                                <td>Plin</td>
+                                <td>96.40</td>
+                                <td>m³</td>
+                                <td>193.73 kg</td>
+                                <td>Ne</td>
+                            </tr>
+
+                            <tr>
+                                <td>30.10.2026.</td>
+                                <td>Struja</td>
+                                <td>145.80</td>
+                                <td>kWh</td>
+                                <td>61.24 kg</td>
+                                <td>Da</td>
+                            </tr>
+
+                            <tr>
+                                <td>29.10.2026.</td>
+                                <td>Voda</td>
+                                <td>38.20</td>
+                                <td>m³</td>
+                                <td>0 kg</td>
+                                <td>Ne</td>
+                            </tr>
+
+                            <tr>
+                                <td>28.10.2026.</td>
+                                <td>Struja</td>
+                                <td>175.60</td>
+                                <td>kWh</td>
+                                <td>73.75 kg</td>
+                                <td>Ne</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
             </section>
+
         </section>
     </main>
 
@@ -139,4 +245,5 @@
         <p>&copy; 2026 EcoTrack. Sva prava zadržana.</p>
     </footer>
 </body>
+
 </html>
