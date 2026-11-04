@@ -1,4 +1,7 @@
+
 :root {
+    color-scheme: light;
+
     --color-primary: #176b50;
     --color-primary-hover: #12543e;
     --color-background: #f4f7f5;
@@ -8,6 +11,11 @@
     --color-border: #d5dfd8;
     --color-error: #c62828;
     --color-success: #23834b;
+    --color-error-background: #fff3f3;
+    --color-on-primary: #ffffff;
+    --color-table-header: #176b50;
+    --color-row-hover: #d5dfd8;
+    --color-table-text: #ffffff;
 
     --spacing-small: 0.5rem;
     --spacing-medium: 1rem;
@@ -16,7 +24,34 @@
     --font-main: Arial, sans-serif;
     --border-width: 1px;
     --border-radius: 8px;
+
+    --layer-workspace: 1;
+    --layer-header: 2;
+    --layer-dropdown: 3;
 }
+
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --color-primary: #75d6ad;
+        --color-primary-hover: #a0e8c7;
+        --color-background: #151c19;
+        --color-surface: #202b25;
+        --color-text: #edf5ef;
+        --color-text-light: #bdcbbf;
+        --color-border: #435349;
+        --color-error: #ff8585;
+        --color-success: #8ce0a8;
+        --color-error-background: #422727;
+        --color-on-primary: #10251b;
+        --color-table-header: #294b3b;
+        --color-row-hover: #34473b;
+        --color-table-text: #ffffff;
+    }
+}
+
 
 * {
     box-sizing: border-box;
@@ -185,27 +220,31 @@ input::placeholder {
     font-weight: normal;
 }
 
+
 button {
     align-self: flex-start;
     padding: 0.75rem 1.5rem;
     font: inherit;
-    color: #ffffff;
+    color: var(--color-on-primary);
     background-color: var(--color-primary);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
 }
 
+
 button:hover {
     background-color: var(--color-primary-hover);
 }
 
 
+
 input:user-invalid,
 select:user-invalid {
     border-color: var(--color-error);
-    background-color: #fff3f3;
+    background-color: var(--color-error-background);
 }
+
 
 input:user-valid,
 select:user-valid {
@@ -282,15 +321,17 @@ caption {
     background-color: var(--color-surface);
 }
 
+
 thead th {
     position: sticky;
     top: 0;
     z-index: 1;
     padding: var(--spacing-medium);
     text-align: left;
-    background-color: var(--color-primary);
-    color: #ffffff;
+    background-color: var(--color-table-header);
+    color: var(--color-table-text);
 }
+
 
 tbody td {
     padding: var(--spacing-medium);
@@ -312,3 +353,110 @@ tbody tr:hover {
         overflow-x: auto;
     }
 }
+
+
+/* Profil korisnika i dropdown meni */
+
+.app-header {
+    position: relative;
+    z-index: var(--layer-header);
+}
+
+.user-profile {
+    position: relative;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.profile-menu summary {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+    padding: var(--spacing-small) var(--spacing-medium);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    list-style: none;
+}
+
+.profile-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.profile-menu summary:hover {
+    background-color: var(--color-background);
+}
+
+.profile-icon {
+    color: var(--color-primary);
+}
+
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + var(--spacing-small));
+    right: 0;
+    width: 220px;
+    padding: var(--spacing-medium);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px var(--color-border);
+}
+
+.dropdown-content h2 {
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+.dropdown-content p {
+    overflow-wrap: anywhere;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+}
+
+.dropdown-content nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: var(--spacing-small);
+    border-radius: var(--border-radius);
+}
+
+.dropdown-content a:hover {
+    background-color: var(--color-background);
+}
+
+/* Dropdown se prikazuje kada je details otvoren */
+
+.profile-menu:not([open]) .dropdown-content {
+    display: none;
+}
+
+
+/* Upravljanje stacking contextom */
+
+.app-layout {
+    position: relative;
+    z-index: var(--layer-workspace);
+}
+
+/* Hover efekat prve dashboard kartice */
+
+.dashboard-card:first-child {
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.dashboard-card:first-child:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 6px 8px var(--color-border));
+}
+
