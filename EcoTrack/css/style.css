@@ -1,0 +1,219 @@
+:root {
+    --color-primary: #176b50;
+    --color-primary-hover: #12543e;
+    --color-background: #f4f7f5;
+    --color-surface: #ffffff;
+    --color-text: #26352e;
+    --color-text-light: #66756c;
+    --color-border: #d5dfd8;
+    --color-error: #c62828;
+    --color-success: #23834b;
+
+    --spacing-small: 0.5rem;
+    --spacing-medium: 1rem;
+    --spacing-large: 1.5rem;
+
+    --font-main: Arial, sans-serif;
+    --border-width: 1px;
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-large);
+    padding: var(--spacing-medium) var(--spacing-large);
+    background-color: var(--color-surface);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.brand h1 {
+    margin: 0;
+    color: var(--color-primary);
+}
+
+.brand p {
+    margin: 0;
+    color: var(--color-text-light);
+}
+
+.app-header nav ul,
+.sidebar nav ul {
+    display: flex;
+    gap: var(--spacing-medium);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.user-profile {
+    text-align: right;
+}
+
+.user-profile h2 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.user-profile p {
+    margin: 0;
+    color: var(--color-text-light);
+}
+
+.app-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-large);
+    padding: var(--spacing-large);
+}
+
+.sidebar {
+    flex: 0 0 220px;
+    padding: var(--spacing-medium);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.sidebar h2,
+.sidebar h3 {
+    margin-top: 0;
+}
+
+.sidebar nav ul {
+    flex-direction: column;
+}
+
+.workspace {
+    flex: 1;
+    min-width: 0;
+}
+
+.overview,
+.measurement-section,
+.history-section {
+    margin-bottom: var(--spacing-large);
+    padding: var(--spacing-large);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.overview h2,
+.measurement-section h2,
+.history-section h2 {
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    font: inherit;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+input::placeholder {
+    color: var(--color-text-light);
+}
+
+.field-description {
+    margin: 0;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+}
+
+.checkbox-group {
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.checkbox-group label {
+    font-weight: normal;
+}
+
+button {
+    align-self: flex-start;
+    padding: 0.75rem 1.5rem;
+    font: inherit;
+    color: #ffffff;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+
+input:user-invalid,
+select:user-invalid {
+    border-color: var(--color-error);
+    background-color: #fff3f3;
+}
+
+input:user-valid,
+select:user-valid {
+    border-color: var(--color-success);
+}
+
+.app-footer {
+    padding: var(--spacing-medium);
+    text-align: center;
+    color: var(--color-text-light);
+}
