@@ -1,23 +1,4 @@
 :root {
-    /*
-    color-scheme: light;
-
-    --color-primary: #176b50;
-    --color-primary-hover: #12543e;
-    --color-background: #f4f7f5;
-    --color-surface: #ffffff;
-    --color-text: #26352e;
-    --color-text-light: #66756c;
-    --color-border: #d5dfd8;
-    --color-error: #c62828;
-    --color-success: #23834b;
-    --color-error-background: #fff3f3;
-    --color-on-primary: #ffffff;
-    --color-table-header: #176b50;
-    --color-row-hover: #d5dfd8;
-    --color-table-text: #ffffff;
-    */
-
     color-scheme: light;
 
     --color-primary: #4F46E5;
@@ -60,7 +41,8 @@
     --shadow-raised: 0 8px 20px var(--color-border);
     --transition-fast: 0.2s ease;
 
-    --sidebar-width: 220px;
+    --sidebar-width: 280px;
+    --dot-size: 0.5rem;
     --card-min-width: 250px;
     --table-min-width: 700px;
     --dropdown-width: 220px;
@@ -78,30 +60,18 @@
 
     --card-hover-offset: -5px;
     --card-hover-shadow: 0 6px 8px var(--color-border);
+
+    --radius-pill: 999px;
+    --logo-size: 2.5rem;
+    --logo-radius: 0 100%;
+    --brand-weight: 800;
+
+    --heading-letter-spacing: 0.06em;
 }
 
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /*
-        color-scheme: dark;
-
-        --color-primary: #75d6ad;
-        --color-primary-hover: #a0e8c7;
-        --color-background: #151c19;
-        --color-surface: #202b25;
-        --color-text: #edf5ef;
-        --color-text-light: #bdcbbf;
-        --color-border: #435349;
-        --color-error: #ff8585;
-        --color-success: #8ce0a8;
-        --color-error-background: #422727;
-        --color-on-primary: #10251b;
-        --color-table-header: #294b3b;
-        --color-row-hover: #34473b;
-        --color-table-text: #ffffff;
-        */
-
         color-scheme: dark;
 
         --color-primary: #A5B4FC;
@@ -181,12 +151,29 @@ summary:focus-visible {
     z-index: var(--layer-header);
 }
 
+.brand {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--spacing-small);
+    align-items: center;
+}
+
+.brand::before {
+    content: "";
+    grid-row: 1 / span 2;
+    width: var(--logo-size);
+    height: var(--logo-size);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-success));
+    border-radius: var(--logo-radius);
+}
+
 .brand h1 {
     margin: 0;
-    color: var(--color-primary);
     font-size: var(--font-size-xl);
+    font-weight: var(--brand-weight);
     letter-spacing: var(--brand-letter-spacing);
-    line-height: 1.2;
+    line-height: var(--heading-line-height);
+    color: var(--color-primary);
 }
 
 .brand p {
@@ -199,23 +186,30 @@ summary:focus-visible {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-small);
-    padding: 0;
+    padding: var(--spacing-small);
     margin: 0;
     list-style: none;
+    background-color: var(--color-background);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-pill);
 }
 
 .app-header > nav a {
     display: block;
-    padding: var(--spacing-small) var(--spacing-medium);
-    border-radius: var(--border-radius);
+    padding: var(--spacing-small) var(--spacing-large);
+    border-radius: var(--radius-pill);
     color: var(--color-text);
     font-weight: bold;
-    transition: background-color var(--transition-fast);
+    transition: background-color var(--transition-fast),
+                color var(--transition-fast),
+                box-shadow var(--transition-fast);
 }
 
-.app-header > nav a:hover {
-    background-color: var(--color-background);
-    color: var(--color-primary);
+.app-header > nav a:hover,
+.app-header > nav a:focus-visible {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow: var(--shadow-card);
     text-decoration: none;
 }
 
@@ -246,43 +240,82 @@ summary:focus-visible {
 
 .sidebar {
     flex: 1 1 var(--sidebar-width);
-    padding: var(--spacing-medium);
+    padding: var(--spacing-large);
     background-color: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
+    border-top: var(--card-accent-width) solid var(--color-primary);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-card);
 }
 
 .sidebar h2 {
-    margin-top: 0;
+    margin: 0 0 var(--spacing-medium);
     font-size: var(--font-size-large);
 }
 
-.sidebar h3 {
-    margin-bottom: var(--spacing-small);
-    font-size: var(--font-size-base);
-    color: var(--color-primary);
+.sidebar section + section {
+    margin-top: var(--spacing-large);
+    padding-top: var(--spacing-large);
+    border-top: var(--border-width) solid var(--color-border);
 }
 
-.sidebar section:last-child p {
-    margin-bottom: 0;
+.sidebar h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+    margin: 0 0 var(--spacing-small);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+}
+
+.sidebar h3::before {
+    content: "";
+    flex-shrink: 0;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    background-color: var(--color-primary);
+    border-radius: var(--radius-pill);
+}
+
+.sidebar p {
+    margin: 0;
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+}
+
+.sidebar section:last-child {
+    padding: var(--spacing-medium);
+    background-color: var(--color-background);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
 }
 
 .emission-factors {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--spacing-small) var(--spacing-medium);
+    grid-template-columns: 1fr auto;
     margin: 0;
 }
 
+.emission-factors dt,
+.emission-factors dd {
+    padding: var(--spacing-small) 0;
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
 .emission-factors dt {
-    font-weight: bold;
+    color: var(--color-text);
 }
 
 .emission-factors dd {
     margin: 0;
     text-align: right;
-    color: var(--color-text-light);
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.emission-factors dt:last-of-type,
+.emission-factors dd:last-of-type {
+    border-bottom: none;
 }
 
 .workspace {
@@ -459,6 +492,7 @@ select:user-valid {
 
 @media (prefers-reduced-motion: reduce) {
     .dashboard-card,
+    .app-header > nav a,
     button {
         transition: none;
     }
@@ -553,7 +587,7 @@ tbody tr:hover {
 .dropdown-content {
     position: absolute;
     top: calc(100% + var(--spacing-small));
-    right: 0;
+    left: 0;
     width: var(--dropdown-width);
     padding: var(--spacing-medium);
     background-color: var(--color-surface);
