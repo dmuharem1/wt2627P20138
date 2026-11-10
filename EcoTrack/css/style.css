@@ -220,9 +220,8 @@ summary:focus-visible {
 }
 
 .user-profile {
+    order: -1;
     position: relative;
-    margin-left: auto;
-    text-align: right;
 }
 
 .user-profile h2 {
@@ -234,9 +233,6 @@ summary:focus-visible {
     margin: 0;
     color: var(--color-text-light);
 }
-
-
-/* Raspored: bočna traka + radni prostor */
 
 .app-layout {
     display: flex;
@@ -294,13 +290,13 @@ summary:focus-visible {
     min-width: 0;
 }
 
-/* U HTML-u je radni prostor prvi (bolje za čitače ekrana i uske ekrane); na širem ekranu je bočna traka lijevo */
-
+/*
 @media (min-width: 768px) {
     .sidebar {
         order: -1;
     }
 }
+    */
 
 .overview,
 .measurement-section,
@@ -412,11 +408,9 @@ select:user-valid {
     border-top: var(--border-width) solid var(--color-border);
 }
 
-
-/* Kartice: najviše dvije kolone a prva kartica je preko cijele širine*/
 .dashboard-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--card-min-width), (100% - var(--spacing-medium)) / 2)), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
     gap: var(--spacing-medium);
 }
  
@@ -431,9 +425,6 @@ select:user-valid {
     transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
-.dashboard-card:first-child {
-    grid-column: 1 / -1;
-}
 
 .dashboard-card h3 {
     margin-top: 0;
@@ -461,8 +452,6 @@ select:user-valid {
     color: var(--color-text-light);
 }
 
-/* Hover efekat kartica (transform + filter) */
-
 .dashboard-card:hover {
     transform: translateY(var(--card-hover-offset));
     filter: drop-shadow(var(--card-hover-shadow));
@@ -478,9 +467,6 @@ select:user-valid {
         transform: none;
     }
 }
-
-
-/* Tabela historije */
 
 .table-container {
     width: 100%;
@@ -527,7 +513,6 @@ tbody tr:hover {
     background-color: var(--color-row-hover);
 }
 
-/* tabela na manjim ekranima */
 
 @media (max-width: 767px) {
     .table-container {
@@ -535,8 +520,6 @@ tbody tr:hover {
     }
 }
 
-
-/* Profil korisnika i dropdown meni */
 
 .profile-menu {
     position: relative;
@@ -610,8 +593,6 @@ tbody tr:hover {
     background-color: var(--color-background);
 }
 
-/* Hover otvara meni  */
-
 .profile-menu:hover::details-content {
     content-visibility: visible;
 }
@@ -619,8 +600,6 @@ tbody tr:hover {
 .profile-menu:not([open]):not(:hover) .dropdown-content {
     display: none;
 }
-
-/* Neprekidno hover područje preko razmaka između dugmeta i menija */
 
 .dropdown-content::before {
     content: "";
