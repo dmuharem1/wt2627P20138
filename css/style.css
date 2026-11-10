@@ -136,7 +136,6 @@ summary:focus-visible {
 
 
 /* Zaglavlje */
-
 .app-header {
     display: flex;
     align-items: center;
@@ -323,14 +322,6 @@ summary:focus-visible {
     min-width: 0;
 }
 
-/*
-@media (min-width: 768px) {
-    .sidebar {
-        order: -1;
-    }
-}
-    */
-
 .overview,
 .measurement-section,
 .history-section {
@@ -348,9 +339,6 @@ summary:focus-visible {
     margin-top: 0;
     font-size: var(--font-size-large);
 }
-
-
-/* Forma */
 
 form {
     display: flex;
@@ -446,7 +434,6 @@ select:user-valid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
     gap: var(--spacing-medium);
 }
- 
 
 .dashboard-card {
     min-width: 0;
@@ -457,7 +444,6 @@ select:user-valid {
     border-radius: var(--border-radius);
     transition: transform var(--transition-fast), filter var(--transition-fast);
 }
-
 
 .dashboard-card h3 {
     margin-top: 0;
@@ -547,13 +533,11 @@ tbody tr:hover {
     background-color: var(--color-row-hover);
 }
 
-
 @media (max-width: 767px) {
     .table-container {
         overflow-x: auto;
     }
 }
-
 
 .profile-menu {
     position: relative;
