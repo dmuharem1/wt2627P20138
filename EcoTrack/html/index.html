@@ -50,22 +50,6 @@
     </header>
 
     <main class="app-layout">
-        <aside class="sidebar">
-            <h2>Radni prostor</h2>
-
-            <nav aria-label="Navigacija radnog prostora">
-                <ul>
-                    <li><a href="#pregled">Dashboard</a></li>
-                    <li><a href="#mjerenja">Unos mjerenja</a></li>
-                    <li><a href="#historija">Historija potrošnje</a></li>
-                </ul>
-            </nav>
-
-            <section>
-                <h3>Informacije</h3>
-                <p>Pratite potrošnju energenata i ekološki učinak postrojenja.</p>
-            </section>
-        </aside>
 
         <section class="workspace">
 
@@ -116,7 +100,7 @@
                             Izbor energenta <span aria-hidden="true">*</span>
                         </label>
 
-                        <select id="energy-type" name="energy-type" required aria-required="true">
+                        <select id="energy-type" name="energy-type" required>
                             <option value="" selected disabled>Odaberite energent</option>
                             <option value="struja">Struja</option>
                             <option value="plin">Plin</option>
@@ -130,7 +114,7 @@
                         </label>
 
                         <input type="number" id="consumption" name="consumption" min="0.01" step="0.01"
-                            placeholder="Npr. 125.50" required aria-required="true">
+                            placeholder="Npr. 125.50" required>
 
                         <p class="field-description">
                             Unesite pozitivnu vrijednost s najviše dvije decimale.
@@ -143,7 +127,7 @@
                         </label>
 
                         <input type="date" id="reading-date" name="reading-date" min="2026-01-01" max="2026-12-31"
-                            required aria-required="true">
+                            required>
                     </section>
 
                     <section class="form-group checkbox-group">
@@ -195,7 +179,7 @@
                                 <td>Plin</td>
                                 <td>85.25</td>
                                 <td>m³</td>
-                                <td>171.36 kg</td>
+                                <td>171.35 kg</td>
                                 <td>Da</td>
                             </tr>
 
@@ -222,7 +206,7 @@
                                 <td>Plin</td>
                                 <td>96.40</td>
                                 <td>m³</td>
-                                <td>193.73 kg</td>
+                                <td>193.76 kg</td>
                                 <td>Ne</td>
                             </tr>
 
@@ -258,6 +242,32 @@
             </section>
 
         </section>
+
+        <aside class="sidebar">
+            <h2>Dodatne informacije</h2>
+
+            <section>
+                <h3>O aplikaciji</h3>
+                <p>Pratite potrošnju energenata i ekološki učinak postrojenja.</p>
+            </section>
+
+            <section>
+                <h3>Faktori emisije CO2</h3>
+                <dl class="emission-factors">
+                    <dt>Struja</dt>
+                    <dd>0,42 kg po kWh</dd>
+                    <dt>Plin</dt>
+                    <dd>2,01 kg po m³</dd>
+                    <dt>Voda</dt>
+                    <dd>0 kg po m³</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h3>Napomena</h3>
+                <p>Mjerenje uz koje je zabilježen incident označite opcijom „Hitna intervencija / Incident“.</p>
+            </section>
+        </aside>
     </main>
 
     <footer class="app-footer">
