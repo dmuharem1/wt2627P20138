@@ -11,10 +11,15 @@ Ovim pravilom sam omogućio da se broj kartica u jednom redu automatski prilago�
 
 ## 2. CSS specifičnost
 
-U svom CSS kodu nisam koristio !important. Pokušao sam organizovati stilove tako da nema potrebe za njim i da se pravila međusobno ne sukobljavaju. Najčešće koristim klase i selektore HTML elemenata, a stilove sam rasporedio od osnovnih prema konkretnijim. Prvo sam definisao osnovni izgled elemenata, a zatim njihove posebne stilove i stanja, kao što su :hover i :user-invalid. Za tamnu temu koristio sam CSS varijable, tako da sam mogao promijeniti boje na jednom mjestu, bez ponavljanja istih pravila za svaki element. Dodao sam i prefers-reduced-motion: reduce kako bi stranica bila ugodnija za korištenje osobama kojima animacije smetaju. Ako korisnik u postavkama svog sistema uključi smanjenje animacija, stranica neće prikazivati tranzicije na karticama, linkovima i dugmadima, niti će se kartica pomjerati i dobijati sjenku prilikom prelaska mišem.
+U svom CSS kodu nisam koristio !important. Pokušao sam organizovati stilove tako da nema potrebe za njim i da se pravila međusobno ne sukobljavaju. Najčešće koristim klase i selektore HTML elemenata, a stilove sam rasporedio od osnovnih prema konkretnijim. Prvo sam definisao osnovni izgled elemenata, a zatim njihove posebne stilove i stanja, kao što su :hover i :user-invalid. Za tamnu temu koristio sam CSS varijable, tako da sam mogao promijeniti boje na jednom mjestu, bez ponavljanja istih pravila za svaki element. Dodao sam i prefers-reduced-motion: reduce kako bi stranica bila ugodnija za korištenje osobama kojima animacije smetaju. Ako korisnik u postavkama svog sistema uključi smanjenje animacija, stranica neće prikazivati tranzicije na karticama, linkovima i dugmadima, niti će se kartica pomjerati i dobijati sjenku prilikom prelaska mišem. Kao primjer specifičnosti, selektor .checkbox-group input ima veću specifičnost od opšteg selektora input, select. Zbog toga checkbox zadržava svoju posebnu širinu, umjesto da preuzme width: 100% koji je definisan za ostala polja forme.
 
 ## 3. Šta bi se desilo kada bih uklonio box-sizing: border-box?
 
 Kada bih iz univerzalnog selektora * uklonio box-sizing: border-box, elementi bi koristili podrazumijevani content-box model. To znači da bi se zadana širina odnosila samo na sadržaj, a padding i border bi se dodavali na nju.
 
 Kod kartica (.dashboard-card) njihovu širinu određuje CSS Grid, tako da samo uklanjanje ovog svojstva ne bi nužno dovelo do toga da kartice izađu iz svojih kolona. Ipak, dodatni padding i border povećali bi ukupne dimenzije elemenata kojima je zadana određena širina. To bi moglo uticati na unutrašnji raspored kartica, posebno kod elemenata koji imaju širinu od 100%. Zbog toga sam koristio box-sizing: border-box. Na taj način su padding i border uključeni u ukupnu širinu elementa, pa je lakše održati pravilan raspored i izbjeći nepotrebno širenje elemenata.
+
+
+
+
+
