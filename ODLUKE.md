@@ -2,33 +2,19 @@
 
 ## 1. Flexbox ili Grid
 
-### Flexbox: .app-layout (radni prostor i sidebar)
+Za raspored radnog prostora i sidebara koristio sam Flexbox jer sam želio da ta dva dijela budu jedan pored drugog. Radni prostor zauzima veći dio širine, dok sidebar zauzima manje prostora. Kada nema dovoljno mjesta, elementi se pomoću flex-wrap: wrap automatski prebacuju jedan ispod drugog. Tako nisam morao dodavati posebna pravila za manje ekrane. Mogao sam koristiti i Grid, ali mi je Flexbox ovdje bio jednostavniji jer se radi o dva glavna elementa koja raspoređujem u jednom pravcu.
 
-Za raspored radnog prostora i sidebara koristio sam Flexbox jer se radi o dva glavna bloka koja trebaju biti jedan pored drugog. Radni prostor zauzima većinu dostupne širine (flex: 999 1 400px), dok sidebar zauzima manje prostora (flex: 1 1 var(--sidebar-width)). Pomoću flex-wrap: wrap elementi se automatski prebacuju u novi red kada nema dovoljno mjesta, bez potrebe za dodatnim @media upitima.
-
-Grid bi se također mogao koristiti, ali bi za ovaj raspored zahtijevao definisanje kolona i dodatno prilagođavanje njihovog rasporeda na manjim ekranima. Flexbox je ovdje jednostavnije rješenje jer se radi o rasporedu elemenata u jednom pravcu.
-
-### Grid: .dashboard-cards (kartice na kontrolnoj tabli)
-
-Za raspored tri kartice koristio sam CSS Grid:
+Za raspored tri kartice na kontrolnoj tabli koristio sam CSS Grid:
 grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
 
-Ovim pravilom preglednik sam određuje koliko kartica može stati u jedan red, vodeći računa o njihovoj minimalnoj širini. Kartice su ravnomjerno raspoređene, a broj kolona se automatski prilagođava dostupnom prostoru, bez dodatnih @media upita. Flexbox bi se mogao koristiti i za kartice, ali bi bilo teže održati jednaku širinu elemenata u različitim redovima. Grid je pogodniji jer omogućava da kartice budu poravnate u pravilne redove i kolone.
+Ovim pravilom sam omogućio da se broj kartica u jednom redu automatski prilagođava širini prostora. Kada ima dovoljno mjesta, kartice su jedna pored druge, a kada ga nema, prebacuju se u novi red. Pri tome se vodi računa i o njihovoj minimalnoj širini, tako da kartice ne postanu previše uske. Flexbox bi se mogao koristiti i za raspored kartica, ali sam izabrao Grid jer mi je praktičniji za organizovanje elemenata u redove i kolone.
 
 ## 2. CSS specifičnost
 
-U CSS-u nisam koristio !important. Trudio sam se da pravila budu jednostavna i da izbjegnem nepotrebno nadjačavanje stilova.
-
-Uglavnom koristim selektore klasa i HTML elemenata, bez ID selektora i inline stilova. CSS pravila su organizovana od općih prema konkretnijim: prvo osnovni stilovi elemenata, zatim stilovi pojedinačnih komponenti, a na kraju njihova stanja poput :hover i :user-invalid. Tamna tema je riješena pomoću CSS varijabli, tako da nije potrebno ponavljati i mijenjati selektore za svaki element. Pravila za prefers-reduced-motion nalaze se nakon osnovnih pravila za animacije. Zbog istog nivoa specifičnosti, ona imaju prednost i isključuju animacije kada korisnik to zatraži u postavkama sistema.
+U svom CSS kodu nisam koristio !important. Pokušao sam organizovati stilove tako da nema potrebe za njim i da se pravila međusobno ne sukobljavaju. Najčešće koristim klase i selektore HTML elemenata, a stilove sam rasporedio od osnovnih prema konkretnijim. Prvo sam definisao osnovni izgled elemenata, a zatim njihove posebne stilove i stanja, kao što su :hover i :user-invalid. Za tamnu temu koristio sam CSS varijable, tako da sam mogao promijeniti boje na jednom mjestu, bez ponavljanja istih pravila za svaki element. Dodao sam i prefers-reduced-motion: reduce kako bi stranica bila ugodnija za korištenje osobama kojima animacije smetaju. Ako korisnik u postavkama svog sistema uključi smanjenje animacija, stranica neće prikazivati tranzicije na karticama, linkovima i dugmadima, niti će se kartica pomjerati i dobijati sjenku prilikom prelaska mišem.
 
 ## 3. Šta bi se desilo kada bih uklonio box-sizing: border-box?
 
-Kada bih iz univerzalnog selektora * uklonio box-sizing: border-box, elementi bi koristili podrazumijevani content-box. To znači da bi se zadana širina odnosila samo na sadržaj, dok bi se padding i border dodavali na tu širinu.
+Kada bih iz univerzalnog selektora * uklonio box-sizing: border-box, elementi bi koristili podrazumijevani content-box model. To znači da bi se zadana širina odnosila samo na sadržaj, a padding i border bi se dodavali na nju.
 
-To bi moglo izazvati nekoliko problema u postojećem rasporedu:
-- Polja forme: input i select imaju width: 100%, ali i dodatni padding i border. Bez border-box modela bila bi šira od svog kontejnera.
-- Tabela: .table-container također ima width: 100% i border, pa bi njegova ukupna širina bila nešto veća od širine roditeljskog elementa.
-- Sidebar: njegov padding i border dodavali bi se na širinu određenu pomoću flex-basis, zbog čega bi zauzimao više prostora nego što je planirano.
-- Kartice: trenutno nemaju eksplicitno zadanu širinu, pa bi uglavnom ostale unutar svojih Grid kolona. Međutim, problem bi se pojavio kada bi im se zadala širina od 100% uz dodatni padding i border.
-
-Na manjim ekranima ovi problemi mogli bi dovesti do horizontalnog pomjeranja stranice i narušavanja rasporeda elemenata. Zbog toga koristim box-sizing: border-box, jer omogućava da ukupna širina elementa uključuje i sadržaj, padding i border. Tako je lakše kontrolisati dimenzije elemenata i održati raspored stranice.
+Kod kartica (.dashboard-card) njihovu širinu određuje CSS Grid, tako da samo uklanjanje ovog svojstva ne bi nužno dovelo do toga da kartice izađu iz svojih kolona. Ipak, dodatni padding i border povećali bi ukupne dimenzije elemenata kojima je zadana određena širina. To bi moglo uticati na unutrašnji raspored kartica, posebno kod elemenata koji imaju širinu od 100%. Zbog toga sam koristio box-sizing: border-box. Na taj način su padding i border uključeni u ukupnu širinu elementa, pa je lakše održati pravilan raspored i izbjeći nepotrebno širenje elemenata.
