@@ -45,6 +45,15 @@
 
     --layer-workspace: 1;
     --layer-header: 2;
+
+    --focus-outline-width: 3px;
+    --focus-outline-offset: 2px;
+
+    --brand-letter-spacing: 0.02em;
+    --heading-line-height: 1.2;
+
+    --card-hover-offset: -5px;
+    --card-hover-shadow: 0 6px 8px var(--color-border);
 }
 
 
@@ -103,8 +112,8 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 summary:focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 2px;
+    outline: var(--focus-outline-width) solid var(--color-primary);
+    outline-offset: var(--focus-outline-offset);
 }
 
 
@@ -128,7 +137,7 @@ summary:focus-visible {
     margin: 0;
     color: var(--color-primary);
     font-size: var(--font-size-xl);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--brand-letter-spacing);
     line-height: 1.2;
 }
 
@@ -356,13 +365,13 @@ select:user-valid {
 }
 
 
-/* Kartice: najviše dvije kolone (prva kartica je preko cijele širine), bez @media */
-
+/* Kartice: najviše dvije kolone a prva kartica je preko cijele širine*/
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--card-min-width), (100% - var(--spacing-medium)) / 2)), 1fr));
     gap: var(--spacing-medium);
 }
+ 
 
 .dashboard-card {
     min-width: 0;
@@ -396,7 +405,7 @@ select:user-valid {
     color: var(--color-primary);
     font-size: var(--font-size-xl);
     font-weight: bold;
-    line-height: 1.2;
+    line-height: var(--heading-line-height);;
 }
 
 .card-description {
@@ -407,8 +416,8 @@ select:user-valid {
 /* Hover efekat kartica (transform + filter) */
 
 .dashboard-card:hover {
-    transform: translateY(-5px);
-    filter: drop-shadow(0 6px 8px var(--color-border));
+    transform: translateY(var(--card-hover-offset));
+    filter: drop-shadow(var(--card-hover-shadow));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -553,7 +562,7 @@ tbody tr:hover {
     background-color: var(--color-background);
 }
 
-/* Hover otvara meni (klik na summary radi preko <details>) */
+/* Hover otvara meni  */
 
 .profile-menu:hover::details-content {
     content-visibility: visible;
@@ -574,5 +583,3 @@ tbody tr:hover {
     height: var(--spacing-small);
 }
 
-/* Stacking context: .app-header (--layer-header) je iznad .app-layout (--layer-workspace),
-   pa dropdown ostaje iznad kartice koja ima transform/filter efekat. */
