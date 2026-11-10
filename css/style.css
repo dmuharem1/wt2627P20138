@@ -152,18 +152,9 @@ summary:focus-visible {
 
 .brand {
     display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: var(--spacing-small);
-    align-items: center;
-}
-
-.brand::before {
-    content: "";
-    grid-row: 1 / span 2;
-    width: var(--logo-size);
-    height: var(--logo-size);
-    background: linear-gradient(135deg, var(--color-primary), var(--color-success));
-    border-radius: var(--logo-radius);
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
 }
 
 .brand h1 {
