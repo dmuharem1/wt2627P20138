@@ -24,28 +24,28 @@
             </ul>
         </nav>
 
-        
-<section class="user-profile">
-    <details class="profile-menu">
-        <summary>
-            <span class="profile-name">Administrator</span>
-            <span class="profile-icon" aria-hidden="true">▾</span>
-        </summary>
 
-        <section class="dropdown-content">
-            <h2>Profil korisnika</h2>
-            <p>administrator@ecotrack.ba</p>
+        <section class="user-profile">
+            <details class="profile-menu">
+                <summary>
+                    <span class="profile-name">Administrator</span>
+                    <span class="profile-icon" aria-hidden="true">▾</span>
+                </summary>
 
-            <nav aria-label="Opcije profila">
-                <ul>
-                    <li><a href="#profil">Moj profil</a></li>
-                    <li><a href="#postavke">Postavke</a></li>
-                    <li><a href="#odjava">Odjava</a></li>
-                </ul>
-            </nav>
+                <section class="dropdown-content">
+                    <h2>Profil korisnika</h2>
+                    <p>administrator@ecotrack.ba</p>
+
+                    <nav aria-label="Opcije profila">
+                        <ul>
+                            <li><a href="#profil">Moj profil</a></li>
+                            <li><a href="#postavke">Postavke</a></li>
+                            <li><a href="#odjava">Odjava</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </details>
         </section>
-    </details>
-</section>
 
     </header>
 
@@ -148,95 +148,97 @@
                 <p>Pregled prethodno evidentiranih mjerenja.</p>
 
                 <section class="table-container" aria-label="Tabela historije mjerenja">
-                    <table>
+                    <table data-testid="tabela">
                         <caption>
                             Historija mjerenja potrošnje energenata
                         </caption>
 
                         <thead>
                             <tr>
-                                <th scope="col">Datum</th>
-                                <th scope="col">Energent</th>
-                                <th scope="col">Potrošnja</th>
-                                <th scope="col">Jedinica</th>
-                                <th scope="col">CO2 emisija</th>
-                                <th scope="col">Incident</th>
+                                <th scope="col" data-column="datum">Datum</th>
+                                <th scope="col" data-column="energent">Energent</th>
+                                <th scope="col" data-column="kolicina">Potrošnja</th>
+                                <th scope="col" data-column="jedinica">Jedinica</th>
+                                <th scope="col" data-column="emisija">CO2 emisija</th>
+                                <th scope="col" data-column="incident">Incident</th>
                             </tr>
                         </thead>
 
+
                         <tbody>
                             <tr>
-                                <td>04.11.2026.</td>
-                                <td>Struja</td>
-                                <td>125.50</td>
-                                <td>kWh</td>
-                                <td>52.71 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">04.11.2026.</td>
+                                <td data-column="energent">Struja</td>
+                                <td data-column="kolicina">125.50</td>
+                                <td data-column="jedinica">kWh</td>
+                                <td data-column="emisija">52.71 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
 
                             <tr>
-                                <td>03.11.2026.</td>
-                                <td>Plin</td>
-                                <td>85.25</td>
-                                <td>m³</td>
-                                <td>171.35 kg</td>
-                                <td>Da</td>
+                                <td data-column="datum">03.11.2026.</td>
+                                <td data-column="energent">Plin</td>
+                                <td data-column="kolicina">85.25</td>
+                                <td data-column="jedinica">m³</td>
+                                <td data-column="emisija">171.35 kg</td>
+                                <td data-column="incident">Da</td>
                             </tr>
 
                             <tr>
-                                <td>02.11.2026.</td>
-                                <td>Voda</td>
-                                <td>42.75</td>
-                                <td>m³</td>
-                                <td>0 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">02.11.2026.</td>
+                                <td data-column="energent">Voda</td>
+                                <td data-column="kolicina">42.75</td>
+                                <td data-column="jedinica">m³</td>
+                                <td data-column="emisija">0 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
 
                             <tr>
-                                <td>01.11.2026.</td>
-                                <td>Struja</td>
-                                <td>210.00</td>
-                                <td>kWh</td>
-                                <td>88.20 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">01.11.2026.</td>
+                                <td data-column="energent">Struja</td>
+                                <td data-column="kolicina">210.00</td>
+                                <td data-column="jedinica">kWh</td>
+                                <td data-column="emisija">88.20 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
 
                             <tr>
-                                <td>31.10.2026.</td>
-                                <td>Plin</td>
-                                <td>96.40</td>
-                                <td>m³</td>
-                                <td>193.76 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">31.10.2026.</td>
+                                <td data-column="energent">Plin</td>
+                                <td data-column="kolicina">96.40</td>
+                                <td data-column="jedinica">m³</td>
+                                <td data-column="emisija">193.76 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
 
                             <tr>
-                                <td>30.10.2026.</td>
-                                <td>Struja</td>
-                                <td>145.80</td>
-                                <td>kWh</td>
-                                <td>61.24 kg</td>
-                                <td>Da</td>
+                                <td data-column="datum">30.10.2026.</td>
+                                <td data-column="energent">Struja</td>
+                                <td data-column="kolicina">145.80</td>
+                                <td data-column="jedinica">kWh</td>
+                                <td data-column="emisija">61.24 kg</td>
+                                <td data-column="incident">Da</td>
                             </tr>
 
                             <tr>
-                                <td>29.10.2026.</td>
-                                <td>Voda</td>
-                                <td>38.20</td>
-                                <td>m³</td>
-                                <td>0 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">29.10.2026.</td>
+                                <td data-column="energent">Voda</td>
+                                <td data-column="kolicina">38.20</td>
+                                <td data-column="jedinica">m³</td>
+                                <td data-column="emisija">0 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
 
                             <tr>
-                                <td>28.10.2026.</td>
-                                <td>Struja</td>
-                                <td>175.60</td>
-                                <td>kWh</td>
-                                <td>73.75 kg</td>
-                                <td>Ne</td>
+                                <td data-column="datum">28.10.2026.</td>
+                                <td data-column="energent">Struja</td>
+                                <td data-column="kolicina">175.60</td>
+                                <td data-column="jedinica">kWh</td>
+                                <td data-column="emisija">73.75 kg</td>
+                                <td data-column="incident">Ne</td>
                             </tr>
                         </tbody>
+
                     </table>
                 </section>
             </section>
