@@ -74,7 +74,8 @@ export function Evidencija(tabelaRef, opcije = {}) {
         }
 
         if (/^\d{2}[./]\d{2}[./]\d{4}$/.test(tekst)) {
-            rezultat = tekst.match(/^(\d{2})[./](\d{2})[./](\d{4})$/);
+            rezultat = tekst.match(/^(\d{2})[./]\(\d{2})[./]\(\d{4})$/);
+
 
             const dan = Number(rezultat[1]);
             const mjesec = Number(rezultat[2]);
@@ -131,6 +132,14 @@ export function Evidencija(tabelaRef, opcije = {}) {
         const godina = datum.getFullYear();
 
         return `${dan}.${mjesec}.${godina}.`;
+    }
+
+    function formatirajISOdatum(datum) {
+        const godina = datum.getFullYear();
+        const mjesec = String(datum.getMonth() + 1).padStart(2, "0");
+        const dan = String(datum.getDate()).padStart(2, "0");
+
+        return `${godina}-${mjesec}-${dan}`;
     }
 
     function kopirajMjerenje(mjerenje) {
@@ -487,12 +496,268 @@ export function Evidencija(tabelaRef, opcije = {}) {
         return mjerenja.length;
     }
 
+
+    function zaokruziNaDvijeDecimale(broj) {
+        return Math.round((broj + Number.EPSILON) * 100) / 100;
+    }
+
+    function dajUkupnuEmisiju(filter = {}) {
+        const filtriranaMjerenja = dajMjerenja(filter);
+
+        const ukupnaEmisija = filtriranaMjerenja.reduce((ukupno, mjerenje) => {
+            const faktor = faktoriEmisije[mjerenje.energent] || 0;
+
+            return ukupno + mjerenje.kolicina * faktor;
+        }, 0);
+
+        return zaokruziNaDvijeDecimale(ukupnaEmisija);
+    }
+
+    function dajStatistikuPoEnergentu() {
+        const statistika = {};
+
+        mjerenja.forEach(mjerenje => {
+            const energent = mjerenje.energent;
+
+            if (!statistika[energent]) {
+                statistika[energent] = {
+                    broj: 0,
+                    ukupno: 0,
+                    prosjek: 0,
+                    min: mjerenje.kolicina,
+                    max: mjerenje.kolicina
+                };
+            }
+
+            const podaci = statistika[energent];
+
+            podaci.broj++;
+            podaci.ukupno += mjerenje.kolicina;
+            podaci.min = Math.min(podaci.min, mjerenje.kolicina);
+            podaci.max = Math.max(podaci.max, mjerenje.kolicina);
+        });
+
+        Object.values(statistika).forEach(podaci => {
+            const ukupno = podaci.ukupno;
+
+            podaci.prosjek = zaokruziNaDvijeDecimale(
+                ukupno / podaci.broj
+            );
+
+            podaci.ukupno = zaokruziNaDvijeDecimale(ukupno);
+        });
+
+        return statistika;
+    }
+
+    function prosjecnaPotrosnja(energent, period) {
+        const danas = new Date();
+
+        let pocetakPerioda = new Date(
+            danas.getFullYear(),
+            danas.getMonth(),
+            danas.getDate()
+        );
+
+        if (period === "sedmica") {
+            const danUSedmici = (pocetakPerioda.getDay() + 6) % 7;
+            pocetakPerioda.setDate(
+                pocetakPerioda.getDate() - danUSedmici
+            );
+        } else if (period === "mjesec") {
+            pocetakPerioda = new Date(
+                danas.getFullYear(),
+                danas.getMonth(),
+                1
+            );
+        } else if (period === "godina") {
+            pocetakPerioda = new Date(
+                danas.getFullYear(),
+                0,
+                1
+            );
+        } else {
+            return 0;
+        }
+
+        const filtriranaMjerenja = mjerenja.filter(mjerenje => {
+            return (
+                mjerenje.energent === String(energent).toLowerCase() &&
+                mjerenje.datum >= pocetakPerioda &&
+                mjerenje.datum <= danas
+            );
+        });
+
+        if (filtriranaMjerenja.length === 0) {
+            return 0;
+        }
+
+        const ukupno = filtriranaMjerenja.reduce(
+            (suma, mjerenje) => suma + mjerenje.kolicina,
+            0
+        );
+
+        return zaokruziNaDvijeDecimale(
+            ukupno / filtriranaMjerenja.length
+        );
+    }
+
+    function detektujAnomalije() {
+        const statistika = dajStatistikuPoEnergentu();
+        const anomalije = [];
+
+        mjerenja.forEach(mjerenje => {
+            let razlog = null;
+
+            if (mjerenje.incident === true) {
+                razlog = "incident";
+            } else if (
+                statistika[mjerenje.energent] &&
+                mjerenje.kolicina >
+                3 * statistika[mjerenje.energent].prosjek
+            ) {
+                razlog = "visoka_potrosnja";
+            } else if (mjerenje.kolicina < 0) {
+                razlog = "negativna_potrosnja";
+            }
+
+            if (razlog !== null) {
+                anomalije.push({
+                    id: mjerenje.id,
+                    razlog: razlog
+                });
+            }
+        });
+
+        return anomalije;
+    }
+
+    function escapujCSV(vrijednost) {
+        const tekst = String(vrijednost);
+
+        if (/[",\r\n]/.test(tekst)) {
+            return '"' + tekst.replace(/"/g, '""') + '"';
+        }
+
+        return tekst;
+    }
+
+    function generisiIzvjestaj(format) {
+        const podaci = dajMjerenja();
+
+        if (format === "json") {
+            return JSON.stringify(podaci);
+        }
+
+        if (format === "csv") {
+            const zaglavlje = [
+                "id",
+                "energent",
+                "kolicina",
+                "datum",
+                "incident"
+            ];
+
+            const redovi = podaci.map(mjerenje => [
+                mjerenje.id,
+                mjerenje.energent,
+                mjerenje.kolicina,
+                formatirajISOdatum(mjerenje.datum),
+                mjerenje.incident
+            ]);
+
+            return [
+                zaglavlje.map(escapujCSV).join(","),
+                ...redovi.map(red => red.map(escapujCSV).join(","))
+            ].join("\r\n");
+        }
+
+        return "";
+    }
+
+    function sortirajMjerenja(kljuc, smjer = "asc") {
+        const dozvoljeniKljuc = [
+            "energent",
+            "kolicina",
+            "datum",
+            "incident"
+        ];
+
+        if (
+            !dozvoljeniKljuc.includes(kljuc) ||
+            !["asc", "desc"].includes(smjer)
+        ) {
+            return [];
+        }
+
+        const kopije = dajMjerenja();
+
+        return kopije
+            .map((mjerenje, indeks) => ({
+                mjerenje,
+                indeks
+            }))
+            .sort((a, b) => {
+                let vrijednostA = a.mjerenje[kljuc];
+                let vrijednostB = b.mjerenje[kljuc];
+
+                if (vrijednostA instanceof Date) {
+                    vrijednostA = vrijednostA.getTime();
+                    vrijednostB = vrijednostB.getTime();
+                }
+
+                if (vrijednostA < vrijednostB) {
+                    return smjer === "asc" ? -1 : 1;
+                }
+
+                if (vrijednostA > vrijednostB) {
+                    return smjer === "asc" ? 1 : -1;
+                }
+
+                return a.indeks - b.indeks;
+            })
+            .map(stavka => stavka.mjerenje);
+    }
+
+    function grupisiPoDanu() {
+        const grupe = {};
+
+        mjerenja.forEach(mjerenje => {
+            const datum = formatirajISOdatum(mjerenje.datum);
+
+            if (!grupe[datum]) {
+                grupe[datum] = [];
+            }
+
+            grupe[datum].push(kopirajMjerenje(mjerenje));
+        });
+
+        const sortiraniDatumi = Object.keys(grupe).sort();
+
+        const rezultat = {};
+
+        sortiraniDatumi.forEach(datum => {
+            rezultat[datum] = grupe[datum];
+        });
+
+        return rezultat;
+    }
+
+
     return {
         dajMjerenja,
         dodajMjerenje,
         ukloniMjerenje,
         azurirajMjerenje,
-        brojMjerenja
+        brojMjerenja,
+
+        dajUkupnuEmisiju,
+        dajStatistikuPoEnergentu,
+        prosjecnaPotrosnja,
+        detektujAnomalije,
+        generisiIzvjestaj,
+        sortirajMjerenja,
+        grupisiPoDanu
     };
 }
 
