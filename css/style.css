@@ -619,3 +619,43 @@ tbody tr:hover {
     height: var(--spacing-small);
 }
 
+/* Poruke forme */
+#poruke {
+    margin-top: var(--spacing-medium);
+    color: var(--color-text);
+    white-space: pre-line;
+}
+
+/* Dugme za brisanje mjerenja */
+.delete-button {
+    padding: var(--spacing-small) var(--spacing-medium);
+    font-size: var(--font-size-small);
+    background-color: var(--color-error);
+    color: #FFFFFF;
+}
+
+.delete-button:hover {
+    filter: brightness(0.9);
+}
+
+/* Animacija novog mjerenja */
+tbody tr.--new {
+    animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    tbody tr.--new {
+        animation: none;
+    }
+}
+

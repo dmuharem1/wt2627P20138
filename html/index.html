@@ -60,7 +60,7 @@
                 <section class="dashboard-cards" aria-label="Sumarni podaci">
                     <article class="dashboard-card">
                         <h3>Ukupna emisija CO2</h3>
-                        <p class="card-value">1.245,80 kg</p>
+                        <p class="card-value" data-testid="kartica-emisija">1.245,80 kg</p>
                         <p class="card-description">
                             Ukupna procijenjena emisija ugljen-dioksida.
                         </p>
@@ -68,7 +68,7 @@
 
                     <article class="dashboard-card">
                         <h3>Ušteda energije</h3>
-                        <p class="card-value">18,5%</p>
+                        <p class="card-value" data-testid="kartica-usteda">18,5%</p>
                         <p class="card-description">
                             Ostvarena ušteda u odnosu na prethodni period.
                         </p>
@@ -82,7 +82,7 @@
                             </span>
                         </h3>
 
-                        <p class="card-value">Aktivno</p>
+                        <p class="card-value" data-testid="kartica-status">Aktivno</p>
                         <p class="card-description">
                             Postrojenje radi u skladu s trenutnim parametrima.
                         </p>
@@ -94,13 +94,13 @@
             <section id="mjerenja" class="measurement-section">
                 <h2>Unos novog mjerenja</h2>
 
-                <form action="#" method="post">
+                <form id="forma-mjerenje" data-testid="forma-mjerenje">
                     <section class="form-group">
                         <label for="energy-type">
                             Izbor energenta <span aria-hidden="true">*</span>
                         </label>
 
-                        <select id="energy-type" name="energy-type" required>
+                        <select id="energy-type" name="energent" required>
                             <option value="" selected disabled>Odaberite energent</option>
                             <option value="struja">Struja</option>
                             <option value="plin">Plin</option>
@@ -113,7 +113,7 @@
                             Količina potrošnje <span aria-hidden="true">*</span>
                         </label>
 
-                        <input type="number" id="consumption" name="consumption" min="0.01" step="0.01"
+                        <input type="number" id="consumption" name="kolicina" min="0.01" step="0.01"
                             placeholder="Npr. 125.50" required>
 
                         <p class="field-description">
@@ -126,8 +126,7 @@
                             Datum očitanja <span aria-hidden="true">*</span>
                         </label>
 
-                        <input type="date" id="reading-date" name="reading-date" min="2026-01-01" max="2026-12-31"
-                            required>
+                        <input type="date" id="reading-date" name="datum" min="2026-01-01" max="2026-12-31" required>
                     </section>
 
                     <section class="form-group checkbox-group">
@@ -140,6 +139,8 @@
 
                     <button type="submit">Sačuvaj mjerenje</button>
                 </form>
+
+                <div id="poruke" role="status" aria-live="polite"></div>
             </section>
 
 
@@ -161,6 +162,7 @@
                                 <th scope="col" data-column="jedinica">Jedinica</th>
                                 <th scope="col" data-column="emisija">CO2 emisija</th>
                                 <th scope="col" data-column="incident">Incident</th>
+                                <th scope="col" data-column="akcije">Akcije</th>
                             </tr>
                         </thead>
 
@@ -173,6 +175,7 @@
                                 <td data-column="jedinica">kWh</td>
                                 <td data-column="emisija">52.71 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -182,6 +185,7 @@
                                 <td data-column="jedinica">m³</td>
                                 <td data-column="emisija">171.35 kg</td>
                                 <td data-column="incident">Da</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -191,6 +195,7 @@
                                 <td data-column="jedinica">m³</td>
                                 <td data-column="emisija">0 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -200,6 +205,7 @@
                                 <td data-column="jedinica">kWh</td>
                                 <td data-column="emisija">88.20 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -209,6 +215,7 @@
                                 <td data-column="jedinica">m³</td>
                                 <td data-column="emisija">193.76 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -218,6 +225,7 @@
                                 <td data-column="jedinica">kWh</td>
                                 <td data-column="emisija">61.24 kg</td>
                                 <td data-column="incident">Da</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -227,6 +235,7 @@
                                 <td data-column="jedinica">m³</td>
                                 <td data-column="emisija">0 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
 
                             <tr>
@@ -236,6 +245,7 @@
                                 <td data-column="jedinica">kWh</td>
                                 <td data-column="emisija">73.75 kg</td>
                                 <td data-column="incident">Ne</td>
+                                <td data-column="akcije"></td>
                             </tr>
                         </tbody>
 
@@ -275,6 +285,7 @@
     <footer class="app-footer">
         <p>&copy; 2026 EcoTrack. Sva prava zadržana.</p>
     </footer>
+    <script type="module" src="../js/app.js"></script>
 </body>
 
 </html>

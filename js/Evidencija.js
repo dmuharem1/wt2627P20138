@@ -74,7 +74,7 @@ export function Evidencija(tabelaRef, opcije = {}) {
         }
 
         if (/^\d{2}[./]\d{2}[./]\d{4}$/.test(tekst)) {
-            rezultat = tekst.match(/^(\d{2})[./]\(\d{2})[./]\(\d{4})$/);
+            rezultat = tekst.match(/^(\d{2})[./](\d{2})[./](\d{4})$/);
 
 
             const dan = Number(rezultat[1]);
