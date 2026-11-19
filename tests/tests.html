@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="bs">
+<head>
+  <meta charset="utf-8">
+  <title>EcoTrack — Javni testovi</title>
+  <link rel="stylesheet" href="https://unpkg.com/mocha@10.7.3/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="https://unpkg.com/mocha@10.7.3/mocha.js"></script>
+  <script src="https://unpkg.com/chai@4.5.0/chai.js"></script>
+  <script src="https://unpkg.com/sinon@17.0.1/pkg/sinon.js"></script>
+  <script>
+    mocha.setup({ ui: 'bdd', timeout: 8000 });
+    window.expect = chai.expect;
+    window.module = window.module || { exports: {} };
+  </script>
+
+  <script src="../js/Evidencija.js"></script>
+  <script>
+    if (typeof window.Evidencija === 'undefined' && window.module.exports) {
+      if (typeof window.module.exports === 'function') window.Evidencija = window.module.exports;
+      else if (typeof window.module.exports.Evidencija === 'function') window.Evidencija = window.module.exports.Evidencija;
+    }
+  </script>
+
+  <script src="helpers.js"></script>
+  <script src="crud-test.js"></script>
+  <script src="analitika-test.js"></script>
+  <script src="smoketest.js"></script>
+  <script>mocha.run();</script>
+</body>
+</html>
