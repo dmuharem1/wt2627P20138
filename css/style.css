@@ -16,6 +16,8 @@
     --color-error-background: #FFF1F2;
 
     --color-on-primary: #FFFFFF;
+    --color-danger: #C62828;
+    --color-on-danger: #FFFFFF;
 
     --color-table-header: #3730A3;
     --color-row-hover: #EEF0FF;
@@ -89,6 +91,8 @@
         --color-error-background: #3B202B;
 
         --color-on-primary: #17182A;
+        --color-danger: #F87171;
+        --color-on-danger: #17182A; 
 
         --color-table-header: #30345B;
         --color-row-hover: #2A304B;
@@ -630,16 +634,17 @@ tbody tr:hover {
 .delete-button {
     padding: var(--spacing-small) var(--spacing-medium);
     font-size: var(--font-size-small);
-    background-color: var(--color-error);
-    color: #FFFFFF;
+    background-color: var(--color-danger);
+    color: var(--color-on-danger);
 }
 
 .delete-button:hover {
+    background-color: var(--color-danger);
     filter: brightness(0.9);
 }
 
 /* Animacija novog mjerenja */
-tbody tr.--new {
+tbody tr[class~="--new"] {
     animation: fade-in 0.5s ease;
 }
 
@@ -654,7 +659,7 @@ tbody tr.--new {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    tbody tr.--new {
+    tbody tr[class~="--new"] {
         animation: none;
     }
 }

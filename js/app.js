@@ -8,6 +8,7 @@
     const karticaEmisija = document.querySelector('[data-testid="kartica-emisija"]');
     const karticaUsteda = document.querySelector('[data-testid="kartica-usteda"]');
     const karticaStatus = document.querySelector('[data-testid="kartica-status"]');
+    const dugmeIzveziCsv = document.querySelector("#izvezi-csv");
 
     const tekucaGodina = new Date().getFullYear();
     const poljeDatum = forma.elements["datum"] || forma.querySelector('input[type="date"]');
@@ -71,11 +72,6 @@
             return;
         }
 
-        slanjeUtoku = true;
-        setTimeout(() => {
-            slanjeUtoku = false;
-        }, 300);
-
         const energent = forma.elements["energent"].value;
         const kolicinaVrijednost = forma.elements["kolicina"].value.trim();
         const kolicina = kolicinaVrijednost === "" ? NaN : Number(kolicinaVrijednost);
@@ -110,6 +106,11 @@
 
             return;
         }
+
+        slanjeUtoku = true;
+        setTimeout(() => {
+            slanjeUtoku = false;
+        }, 300);
 
         const svaMjerenja = evidencija.dajMjerenja();
         const novoMjerenje = svaMjerenja[svaMjerenja.length - 1];
@@ -173,4 +174,13 @@
 
         tabela.dispatchEvent(dogadjaj);
     });
+
+    if (dugmeIzveziCsv) {
+        dugmeIzveziCsv.addEventListener("click", function () {
+            const uspjesno = evidencija.izveziKaoCSV();
+            poruke.textContent = uspjesno
+                ? "CSV izvještaj je uspješno preuzet."
+                : "Greška pri izvozu CSV izvještaja.";
+        });
+    }
 })();

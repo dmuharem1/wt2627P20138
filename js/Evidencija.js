@@ -392,7 +392,13 @@ const Evidencija = (function () {
                     }
 
                     if (f.odDatuma instanceof Date && !Number.isNaN(f.odDatuma.getTime())) {
-                        if (m.datum < f.odDatuma) {
+                        const granicaOd = new Date(
+                            f.odDatuma.getFullYear(),
+                            f.odDatuma.getMonth(),
+                            f.odDatuma.getDate(),
+                            0, 0, 0, 0
+                        );
+                        if (m.datum < granicaOd) {
                             return false;
                         }
                     }
@@ -677,8 +683,13 @@ const Evidencija = (function () {
             const podaci = dajMjerenja();
 
             if (format === "json") {
-                return JSON.stringify(podaci);
-            }
+                return JSON.stringify(
+                    podaci.map(mjerenje => ({
+                        ...mjerenje,
+                        datum: formatirajISOdatum(mjerenje.datum)
+        }))
+    );
+}
 
             if (format === "csv") {
                 const zaglavlje = [
@@ -764,8 +775,6 @@ const Evidencija = (function () {
 
             return rezultat;
         }
-
-        // Zadatak 4: Dodatne metode
 
         function prognozirajPotrosnju(energent, brojDana) {
             if (!Number.isInteger(brojDana) || brojDana <= 0) {
@@ -973,7 +982,7 @@ const Evidencija = (function () {
                 incident: 3
             };
 
-            const prviRed = redovi[0].map(c => c.trim().toLowerCase());
+            const prviRed = redovi[0].map(normalizujNazivKolone);
             if (prviRed.includes("energent") && prviRed.includes("kolicina")) {
                 pocetniIndeks = 1;
                 indeksKolone = {
